@@ -2,6 +2,7 @@
 
 
 #include "Item/InventoryItemInstance.h"
+#include "Item/InventoryItemInstanceFragment.h"
 
 #include "UObject/UObjectGlobals.h"
 
@@ -33,7 +34,16 @@ bool UInventoryItemInstance::IsMatching(const UInventoryItemInstance* InstanceA,
 		return false;
 	}
 
-	// TODO：加入动态 Fragment 后，也需要比较影响堆叠兼容性的状态。
+	if (InstanceA == InstanceB)
+	{
+		return true;
+	}
+	// Generic runtime fragments have no domain-independent equality rule.
+	// Never report different mutable states as equal just because tags happen to match.
+	if (!InstanceA->Fragments.IsEmpty() || !InstanceB->Fragments.IsEmpty())
+	{
+		return false;
+	}
 	return InstanceA->InstanceTags == InstanceB->InstanceTags;
 }
 
@@ -41,4 +51,53 @@ UInventoryItemInstance* UInventoryItemInstance::DuplicateInstance(UObject* Outer
 {
 	UObject* InstanceOuter = IsValid(Outer) ? Outer : GetTransientPackage();
 	return DuplicateObject<UInventoryItemInstance>(this, InstanceOuter);
+}
+
+UInventoryItemInstanceFragment* UInventoryItemInstance::AddFragmentByClass(
+	TSubclassOf<UInventoryItemInstanceFragment> FragmentClass)
+{
+	UClass* Class = FragmentClass.Get();
+	if (!IsValid(Class) || Class->HasAnyClassFlags(CLASS_Abstract | CLASS_Deprecated | CLASS_NewerVersionExists))
+	{
+		return nullptr;
+	}
+	for (UInventoryItemInstanceFragment* Fragment : Fragments)
+	{
+		if (IsValid(Fragment) && Fragment->GetClass() == Class)
+		{
+			return Fragment;
+		}
+	}
+	UInventoryItemInstanceFragment* Fragment = NewObject<UInventoryItemInstanceFragment>(this, Class);
+	if (IsValid(Fragment))
+	{
+		Fragments.Add(Fragment);
+	}
+	return Fragment;
+}
+
+UInventoryItemInstanceFragment* UInventoryItemInstance::FindFragmentByClass(
+	TSubclassOf<UInventoryItemInstanceFragment> FragmentClass) const
+{
+	if (!FragmentClass)
+	{
+		return nullptr;
+	}
+	for (UInventoryItemInstanceFragment* Fragment : Fragments)
+	{
+		if (IsValid(Fragment) && Fragment->IsA(FragmentClass))
+		{
+			return Fragment;
+		}
+	}
+	return nullptr;
+}
+
+bool UInventoryItemInstance::RemoveFragment(UInventoryItemInstanceFragment* Fragment)
+{
+	if (!IsValid(Fragment) || Fragment->GetOuter() != this)
+	{
+		return false;
+	}
+	return Fragments.RemoveSingle(Fragment) > 0;
 }

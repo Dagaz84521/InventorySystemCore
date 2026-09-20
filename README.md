@@ -11,6 +11,7 @@ InventoryCore
     │   ├── Item
     │   │   ├── InventoryItemDefinition.h
     │   │   ├── InventoryItemInstance.h
+    │   │   ├── InventoryItemInstanceFragment.h
     │   │   └── InventoryItemFragment.h
     │   └── Core
     │       ├── InventoryComponent.h
@@ -133,3 +134,41 @@ UE 5.4 / Win64 Development：
 独立项目测试报告：Saved/Automation/InventoryCoreStandalone/index.json。
 
 未执行 Cook、网络复制或人工 PIE 视觉验收。本次没有继续改造 Aggregate/Slotted 的策略和 UI 配置。
+
+## Instance 动态 Fragments
+
+`UInventoryItemFragment` 继续作为 Definition 的共享静态配置。新增 `UInventoryItemInstanceFragment` 作为每个 ItemInstance 独立拥有的可变状态基类，可以用 C++ 或 Blueprint 派生，例如当前耐久、随机词条、充能次数。
+
+`UInventoryItemInstance` 提供：
+
+- `AddFragmentByClass(Class)`：创建 Outer 为当前 Instance 的状态对象，并纳入 Instanced UPROPERTY 数组。每个具体类最多一个；重复添加返回已有对象，不重置状态。空类、抽象类和已废弃类返回 nullptr。
+- `FindFragmentByClass(Class)`：查找第一个匹配对象，支持派生类；不会创建状态。父类和子类若分别添加，可以同时存在，需精确区分时传具体类型。
+- `FindFragment<T>()`：C++ 强类型查找，提供 const/non-const 版本。
+- `RemoveFragment(Fragment)`：移除当前 Instance 已挂接的指定对象；不接受其他 Instance 的对象。移除不会强行销毁外部仍引用的对象。
+- `Fragment->GetItemInstance()`：返回 Outer 所表示的所属实例。移除后 Outer 不变；它不代表该 Fragment 仍在实例容器中。
+
+初始化沿用现有 Definition Fragment 扩展点，不需要改造 ItemDefinition：
+
+1. 静态配置 Fragment 覆写 `RequiresItemInstance` 返回 true。
+2. 在 `OnInstanceCreated` 中调用 `Instance->AddFragmentByClass(...)`。
+3. 将静态初始配置写入返回的动态对象。
+
+例如静态片段保存 `MaxDurability = 100`，实例片段保存 `CurrentDurability`。创建每件物品时用前者初始化后者，游戏中只修改 Instance Fragment。
+
+```cpp
+// Inside a definition fragment's OnInstanceCreated_Implementation:
+auto* State = Cast<UDurabilityInstanceFragment>(
+    Instance->AddFragmentByClass(UDurabilityInstanceFragment::StaticClass()));
+if (State)
+{
+    State->CurrentDurability = MaxDurability;
+}
+```
+
+动态状态字段应使用 UPROPERTY。实例数组使用 `UPROPERTY(Instanced)`，因此 `DuplicateInstance` 通过 DuplicateObject 复制 Fragment 子对象和已反射状态，副本的 Fragment Outer 指向副本 Instance。Fragment 内部的普通外部对象引用仍共享；如果字段本身代表需要独立复制的子对象，也应正确声明 Instanced。非反射 C++ 字段不在此复制契约中。
+
+已有无状态物品不会自动创建 Instance。带 Instance 的 Payload 仍只允许数量 1，且不可堆叠。历史 `UInventoryItemInstance::IsMatching` 不再将有不同动态 Fragment 的实例仅凭标签相同判为等价；没有通用状态相等规则时采用保守返回 false，同一有效实例仍匹配自身。无 Fragment 的旧标签比较保持不变。
+
+直接修改 Fragment 字段不会自动广播库存 `OnEntryChanged`：该事件仍对应 Entry/Payload 替换。具体状态的变化通知由派生 Fragment 或使用它的上层逻辑定义，此次没有添加 UI 或复制系统。
+
+新增 InstanceFragments 自动化测试覆盖 Definition 初始化、实例隔离、重复添加、基类查询、非法类、移除归属、独立复制、GC 保留及移除后回收。参考 UObject 引用规则：[Epic Object Pointers](https://dev.epicgames.com/documentation/unreal-engine/object-pointers-in-unreal-engine)。复制行为以本机 UE 5.4 构建和运行测试为准。

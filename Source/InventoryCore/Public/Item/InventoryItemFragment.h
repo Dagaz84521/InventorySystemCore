@@ -32,7 +32,8 @@ public:
 
 	/**
 	 * 当定义创建出一个运行时物品实例后调用。
-	 * 派生 Fragment 可在此向实例写入初始状态；蓝图 Fragment 也可以覆写该事件。
+	 * 派生 Fragment 可调用 Instance->AddFragmentByClass 创建独立动态片段并写入初始值。
+	 * 需要实例时同时覆写 RequiresItemInstance 返回 true；蓝图也可覆写这两个事件。
 	 */
 	UFUNCTION(BlueprintNativeEvent, Category = "Inventory|Fragment")
 	void OnInstanceCreated(UInventoryItemInstance* Instance) const;
