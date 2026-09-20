@@ -1,0 +1,29 @@
+# Unreal Engine generated files (source plugin repository)
+/Binaries/
+/Intermediate/
+/Saved/
+/DerivedDataCache/
+
+# Local IDE state and generated project files
+/.vs/
+/.idea/
+/.vscode/
+/*.sln
+/*.slnx
+/*.sdf
+/*.opensdf
+/*.VC.db
+/*.VC.opendb
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Keep Source/ (including tests), Config/, Content/, Resources/, the plugin
+# descriptor and documentation tracked. Do not blanket-ignore Build/ or DLLs:
+# those may contain maintained build resources or third-party dependencies.
