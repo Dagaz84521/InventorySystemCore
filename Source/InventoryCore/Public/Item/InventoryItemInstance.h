@@ -21,6 +21,12 @@ class INVENTORYCORE_API UInventoryItemInstance : public UObject, public IGamepla
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintPure, Category = "Inventory|Instance")
+	const UInventoryItemDefinition* GetItemDefinition() const
+	{
+		return ItemDefinition;
+	}
+	
 	/** 返回当前实例拥有的动态标签。 */
 	virtual void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const override;
 
@@ -72,6 +78,20 @@ public:
 	UInventoryItemInstance* DuplicateInstance(UObject* Outer = nullptr) const;
 
 private:
+	friend class UInventoryItemDefinition;
+	
+	/**
+	* 创建该运行时实例的静态 Definition。
+	* Instance 可以不存在，但存在的 Instance 必须属于一个 Definition。
+	*/
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Inventory|Instance", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UInventoryItemDefinition> ItemDefinition = nullptr;
+	
+	void Initialize(UInventoryItemDefinition* InDefinition)
+	{
+		ItemDefinition = InDefinition;
+	}
+	
 	/** 仅属于当前实例、可在运行时变化的标签。 */
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Inventory|Instance", meta = (AllowPrivateAccess = true))
 	FGameplayTagContainer InstanceTags;

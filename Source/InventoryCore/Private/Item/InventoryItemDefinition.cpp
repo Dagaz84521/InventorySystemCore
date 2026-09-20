@@ -91,7 +91,9 @@ UInventoryItemInstance* UInventoryItemDefinition::CreateItemInstance(UObject* Ou
 	{
 		return nullptr;
 	}
-
+	
+	Instance->Initialize(const_cast<UInventoryItemDefinition*>(this));
+	
 	for (const UInventoryItemFragment* Fragment : Fragments)
 	{
 		if (IsValid(Fragment))

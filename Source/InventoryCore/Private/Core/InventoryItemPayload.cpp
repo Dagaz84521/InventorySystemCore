@@ -29,7 +29,7 @@ bool FInventoryItemPayload::IsValid() const
 
 	if (ItemDefinition->RequiresItemInstance())
 	{
-		return ::IsValid(ItemInstance) && Quantity == 1;
+		return ::IsValid(ItemInstance) && (ItemInstance->GetItemDefinition() == ItemDefinition) && (Quantity == 1);
 	}
 
 	return ItemInstance == nullptr;
