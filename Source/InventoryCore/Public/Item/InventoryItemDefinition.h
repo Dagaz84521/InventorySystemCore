@@ -71,6 +71,7 @@ protected:
 	FText Description;
 	
 	/** 物品的模板ID */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory|Identity")
 	FGameplayTag TemplateID;
 
 	/** 描述物品类别和特性的静态 Gameplay Tag。 */

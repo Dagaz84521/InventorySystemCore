@@ -63,17 +63,3 @@ void InventoryCore::RebuildEntries(TArray<FInventoryEntry>& Entries, int64& Next
 		}
 	}
 }
-
-const FInventoryEntry* InventoryCore::Resolve(const TArray<FInventoryEntry>& Entries,
-	const FGuid& InventoryID, const FInventoryHandle& Handle)
-{
-	return Handle.IsSet() && Handle.GetInventoryID() == InventoryID
-		? Find(Entries, Handle.GetEntryID()) : nullptr;
-}
-
-FInventoryEntry* InventoryCore::Resolve(TArray<FInventoryEntry>& Entries,
-	const FGuid& InventoryID, const FInventoryHandle& Handle)
-{
-	return Handle.IsSet() && Handle.GetInventoryID() == InventoryID
-		? Find(Entries, Handle.GetEntryID()) : nullptr;
-}

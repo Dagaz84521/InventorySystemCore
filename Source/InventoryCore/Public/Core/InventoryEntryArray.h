@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "Core/InventoryEntry.h"
-#include "Core/InventoryHandle.h"
 #include "InventoryEntryArray.generated.h"
 
 class UInventoryComponent;
@@ -73,9 +72,6 @@ struct INVENTORYCORE_API FInventoryEntryHandle
 	
 	/** Resolves the record; unlike IsSet, rejects removed records and destroyed owners. */
 	bool IsValid() const;
-
-	/** Non-owning Core identity. May remain set after the record is removed. */
-	FInventoryHandle ToCoreHandle() const;
 
 	void Reset() { *this = FInventoryEntryHandle(); }
 

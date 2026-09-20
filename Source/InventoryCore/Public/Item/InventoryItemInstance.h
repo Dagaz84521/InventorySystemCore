@@ -8,6 +8,7 @@
 #include "InventoryItemInstance.generated.h"
 
 class UInventoryItemInstanceFragment;
+class UInventoryItemDefinition;
 
 /**
  * 物品可选的运行时动态状态。

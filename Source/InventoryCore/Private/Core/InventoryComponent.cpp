@@ -145,24 +145,3 @@ void UInventoryComponent::RebuildRuntimeState()
  InventoryCore::RebuildEntries(EntryArray.ItemEntries, NextEntryID);
  OnInventoryReset.Broadcast();
 }
-
-const FInventoryEntry* UInventoryComponent::ResolveEntry(const FInventoryHandle& Handle) const
-{
-	return InventoryCore::Resolve(EntryArray.ItemEntries, InventoryIdentity, Handle);
-}
-
-bool UInventoryComponent::GetEntryByCoreHandle(const FInventoryHandle& Handle, FInventoryEntry& OutEntry) const
-{
-	if (const FInventoryEntry* Entry = ResolveEntry(Handle))
-	{
-		OutEntry = *Entry;
-		return true;
-	}
-	OutEntry = FInventoryEntry();
-	return false;
-}
-
-FInventoryHandle UInventoryComponent::GetCoreHandle(const FInventoryEntryHandle& Handle) const
-{
-	return IsValidEntryHandle(Handle) ? Handle.ToCoreHandle() : FInventoryHandle();
-}

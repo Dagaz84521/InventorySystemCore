@@ -20,9 +20,9 @@ bool FInventoryCoreComponentTest::RunTest(const FString& Parameters)
 	if (!TestNotNull(TEXT("Query by local ID"), Found)) return false;
 	TestEqual(TEXT("Stored quantity"), Found->Payload.Quantity, int64(4));
 	const FInventoryEntryHandle Handle = Inventory->MakeEntryHandle(ID);
-	const FInventoryHandle CoreHandle = Inventory->GetCoreHandle(Handle);
 	TestTrue(TEXT("Component Handle resolves without upper plugin"), Handle.IsValid());
-	TestNotNull(TEXT("Core Handle resolves"), Inventory->ResolveEntry(CoreHandle));
+	FInventoryEntry EntryCopy;
+	TestTrue(TEXT("Component Handle query succeeds"), Inventory->GetEntry(Handle, EntryCopy));
 	Other->CreateEntryID(Payload);
 	TestFalse(TEXT("Foreign handle cannot mutate matching ID"), Other->SetEntryPayload(Handle, {}));
 	TestFalse(TEXT("Foreign handle cannot remove matching ID"), Other->RemoveEntry(Handle));
@@ -37,7 +37,8 @@ bool FInventoryCoreComponentTest::RunTest(const FString& Parameters)
 	TestTrue(TEXT("Cleared payload is empty"), Inventory->LastChangedPayload.IsEmpty());
 	TestTrue(TEXT("Remove by ID"), Inventory->RemoveEntryByID(ID));
 	TestFalse(TEXT("Removed Handle cannot resolve"), Handle.IsValid());
-	TestNull(TEXT("Removed Core Handle cannot resolve"), Inventory->ResolveEntry(CoreHandle));
+	TestFalse(TEXT("Removed Handle query fails"), Inventory->GetEntry(Handle, EntryCopy));
+	TestEqual(TEXT("Failed query clears output"), EntryCopy.EntryID, INDEX_NONE);
 	TestFalse(TEXT("Repeated remove fails"), Inventory->RemoveEntryByID(ID));
 	TestFalse(TEXT("Removed record cannot be updated"), Inventory->SetEntryPayloadByID(ID, Payload));
 	TestEqual(TEXT("One remove event"), Inventory->RemovedCount, 1);

@@ -3,7 +3,7 @@
 
 #include "Item/InventoryItemInstance.h"
 #include "Item/InventoryItemInstanceFragment.h"
-
+#include "Item/InventoryItemDefinition.h"
 #include "UObject/UObjectGlobals.h"
 
 void UInventoryItemInstance::GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const
@@ -38,6 +38,12 @@ bool UInventoryItemInstance::IsMatching(const UInventoryItemInstance* InstanceA,
 	{
 		return true;
 	}
+	
+	if (InstanceA->GetItemDefinition() != InstanceB->GetItemDefinition())
+	{
+		return false;
+	}
+	
 	// Generic runtime fragments have no domain-independent equality rule.
 	// Never report different mutable states as equal just because tags happen to match.
 	if (!InstanceA->Fragments.IsEmpty() || !InstanceB->Fragments.IsEmpty())

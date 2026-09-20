@@ -33,19 +33,6 @@ class INVENTORYCORE_API UInventoryComponent : public UActorComponent
 public:
 	UInventoryComponent();
 
-	/** Runtime identity belongs to this component instance; never copied from saved assets. */
-	const FGuid& GetInventoryIdentity() const { return InventoryIdentity; }
-
-	/** Resolve a Core handle without requiring a component pointer in the handle. */
-	const FInventoryEntry* ResolveEntry(const FInventoryHandle& Handle) const;
-
-	UFUNCTION(BlueprintPure, Category = "Inventory")
-	bool GetEntryByCoreHandle(const FInventoryHandle& Handle, FInventoryEntry& OutEntry) const;
-
-	/** Returns unset for a foreign or removed component handle. */
-	UFUNCTION(BlueprintPure, Category = "Inventory")
-	FInventoryHandle GetCoreHandle(const FInventoryEntryHandle& Handle) const;
-
 	/** 返回当前背包拥有的全部 Entry Handle。 */
 	UFUNCTION(BlueprintPure, Category = "Inventory")
 	TArray<FInventoryEntryHandle> GetAllEntryHandles() const;
@@ -122,7 +109,4 @@ private:
 
 	/** 内部使用 int64 计数，避免 int32 ID 耗尽后发生回绕。 */
 	int64 NextEntryID = 0;
-
-	// Native-only so duplication/load creates a new identity, not a copy of another inventory.
-	const FGuid InventoryIdentity = FGuid::NewGuid();
 };
