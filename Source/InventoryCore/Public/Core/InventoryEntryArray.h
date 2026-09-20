@@ -13,10 +13,6 @@ struct INVENTORYCORE_API FInventoryEntryArray
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Inventory")
 	TArray<FInventoryEntry> ItemEntries;
-
-	/** 运行时反向引用；组件注册时会重新设置该字段。 */
-	UPROPERTY(Transient, NotReplicated)
-	TObjectPtr<UInventoryComponent> InventoryComponent;
 };
 
 /** 对指定背包组件所拥有 Entry 的稳定引用。 */
@@ -51,16 +47,6 @@ struct INVENTORYCORE_API FInventoryEntryHandle
 	}
 
 	bool operator!=(const FInventoryEntryHandle& Other) const
-	{
-		return !(*this == Other);
-	}
-
-	bool operator==(const FInventoryEntry& Other) const
-	{
-		return EntryID == Other.EntryID;
-	}
-
-	bool operator!=(const FInventoryEntry& Other) const
 	{
 		return !(*this == Other);
 	}

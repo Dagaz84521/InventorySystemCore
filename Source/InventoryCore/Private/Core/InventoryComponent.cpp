@@ -4,7 +4,6 @@
 UInventoryComponent::UInventoryComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
-	EntryArray.InventoryComponent = this;
 }
 
 void UInventoryComponent::OnRegister()
@@ -141,7 +140,6 @@ FInventoryEntryHandle UInventoryComponent::MakeEntryHandle(int32 EntryID) const
 
 void UInventoryComponent::RebuildRuntimeState()
 {
- EntryArray.InventoryComponent = this;
  InventoryCore::RebuildEntries(EntryArray.ItemEntries, NextEntryID);
  OnInventoryReset.Broadcast();
 }
