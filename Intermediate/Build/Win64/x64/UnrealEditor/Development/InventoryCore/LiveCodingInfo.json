@@ -1,0 +1,31 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.InventoryCore.cpp.obj": [
+			"InventoryComponent.gen.cpp.obj",
+			"InventoryCore.init.gen.cpp.obj",
+			"InventoryCoreTestComponent.gen.cpp.obj",
+			"InventoryEntry.gen.cpp.obj",
+			"InventoryEntryArray.gen.cpp.obj",
+			"InventoryHandle.gen.cpp.obj",
+			"InventoryItemDefinition.gen.cpp.obj",
+			"InventoryItemFragment.gen.cpp.obj",
+			"InventoryItemInstance.gen.cpp.obj",
+			"InventoryItemPayload.gen.cpp.obj",
+			"InventoryOperationResult.gen.cpp.obj",
+			"InventoryQuantityOperationResult.gen.cpp.obj",
+			"InventoryComponent.cpp.obj",
+			"InventoryEntryHandle.cpp.obj",
+			"InventoryEntryStorage.cpp.obj",
+			"InventoryItemPayload.cpp.obj",
+			"InventoryOperations.cpp.obj",
+			"InventoryCoreModule.cpp.obj",
+			"InventoryItemDefinition.cpp.obj",
+			"InventoryItemFragment.cpp.obj",
+			"InventoryItemInstance.cpp.obj",
+			"InventoryCoreComponentTests.cpp.obj",
+			"InventoryCoreTests.cpp.obj",
+			"InventoryHandleTests.cpp.obj"
+		]
+	}
+}

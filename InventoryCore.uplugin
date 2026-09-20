@@ -1,0 +1,16 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "1.0",
+  "FriendlyName": "Inventory Core",
+  "Description": "Shared item model and inventory domain operations.",
+  "Category": "Inventory",
+  "CanContainContent": false,
+  "Modules": [
+    {
+      "Name": "InventoryCore",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ]
+}

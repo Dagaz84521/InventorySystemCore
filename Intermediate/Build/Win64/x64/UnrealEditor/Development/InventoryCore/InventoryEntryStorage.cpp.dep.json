@@ -1,0 +1,20 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\source\\inventorycore\\private\\core\\inventoryentrystorage.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unreal\\packsystem\\packsystem\\intermediate\\build\\win64\\x64\\packsystemeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\inventorycore\\definitions.inventorycore.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\source\\inventorycore\\public\\core\\inventoryentrystorage.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\source\\inventorycore\\public\\core\\inventoryentry.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\source\\inventorycore\\public\\core\\inventoryitempayload.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\intermediate\\build\\win64\\unrealeditor\\inc\\inventorycore\\uht\\inventoryitempayload.generated.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\intermediate\\build\\win64\\unrealeditor\\inc\\inventorycore\\uht\\inventoryentry.generated.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\source\\inventorycore\\public\\core\\inventoryhandle.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\intermediate\\build\\win64\\unrealeditor\\inc\\inventorycore\\uht\\inventoryhandle.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

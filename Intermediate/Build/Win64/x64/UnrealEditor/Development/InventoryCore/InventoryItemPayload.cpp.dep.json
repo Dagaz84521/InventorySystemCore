@@ -1,0 +1,30 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\source\\inventorycore\\private\\core\\inventoryitempayload.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unreal\\packsystem\\packsystem\\intermediate\\build\\win64\\x64\\packsystemeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\inventorycore\\definitions.inventorycore.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\source\\inventorycore\\public\\core\\inventoryitempayload.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\intermediate\\build\\win64\\unrealeditor\\inc\\inventorycore\\uht\\inventoryitempayload.generated.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\source\\inventorycore\\public\\item\\inventoryitemdefinition.h",
+            "d:\\program\\ue_5.4\\engine\\source\\runtime\\gameplaytags\\classes\\gameplaytagassetinterface.h",
+            "d:\\program\\ue_5.4\\engine\\source\\runtime\\gameplaytags\\classes\\gameplaytagcontainer.h",
+            "d:\\program\\ue_5.4\\engine\\source\\runtime\\core\\public\\misc\\comparisonutility.h",
+            "d:\\program\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\gameplaytags\\uht\\gameplaytagcontainer.generated.h",
+            "d:\\program\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\gameplaytags\\uht\\gameplaytagassetinterface.generated.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\intermediate\\build\\win64\\unrealeditor\\inc\\inventorycore\\uht\\inventoryitemdefinition.generated.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\source\\inventorycore\\public\\item\\inventoryiteminstance.h",
+            "d:\\program\\ue_5.4\\engine\\source\\runtime\\coreuobject\\public\\uobject\\noexporttypes.h",
+            "d:\\program\\ue_5.4\\engine\\source\\runtime\\coreuobject\\public\\uobject\\propertyaccessutil.h",
+            "d:\\program\\ue_5.4\\engine\\source\\runtime\\coreuobject\\public\\serialization\\testundeclaredscriptstructobjectreferences.h",
+            "d:\\program\\ue_5.4\\engine\\source\\runtime\\core\\public\\math\\unitconversion.h",
+            "d:\\program\\ue_5.4\\engine\\source\\runtime\\core\\public\\math\\unitconversion.inl",
+            "d:\\program\\ue_5.4\\engine\\source\\runtime\\core\\public\\internationalization\\polyglottextdata.h",
+            "d:\\unreal\\packsystem\\packsystem\\plugins\\inventorycore\\intermediate\\build\\win64\\unrealeditor\\inc\\inventorycore\\uht\\inventoryiteminstance.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
