@@ -46,9 +46,19 @@ bool FInventoryCoreComponentTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Invalid create emits no added event"), Inventory->AddedCount, 1);
 	TestTrue(TEXT("Notifications observe committed storage"), Inventory->bEventsObserveCommittedState);
 	TestTrue(TEXT("Deleted ID is not reused"), Inventory->CreateEntryID({}) > ID);
+	FInventoryOperationResult DomainResult;
+	DomainResult.Status = EInventoryQuantityOperationStatus::PartialSucceeded;
+	DomainResult.RequestedQuantity = 5;
+	DomainResult.ChangedQuantity = 2;
+	DomainResult.RemainingQuantity = 3;
+	DomainResult.OutputPayload = Payload;
+	DomainResult.FailureReason = EInventoryFailureReason::InsufficientQuantity;
 	FInventoryQuantityOperationResult Result;
-	Result.Set(EInventoryQuantityOperationStatus::Succeeded, 1, 1, Payload, Handle);
+	Result.Set(DomainResult, Handle);
 	TestTrue(TEXT("Shared component result is available from Core"), Result.AffectedEntry == Handle);
+	TestEqual(TEXT("Component result preserves domain failure reason"), Result.FailureReason,
+		EInventoryFailureReason::InsufficientQuantity);
+	TestEqual(TEXT("Component result preserves remaining quantity"), Result.RemainingQuantity, int64(3));
 	TestEqual(TEXT("Base class belongs to Core"), UInventoryComponent::StaticClass()->GetOutermost()->GetName(), FString(TEXT("/Script/InventoryCore")));
 	return true;
 }

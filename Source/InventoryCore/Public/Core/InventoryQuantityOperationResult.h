@@ -10,16 +10,14 @@ struct INVENTORYCORE_API FInventoryQuantityOperationResult : public FInventoryOp
  GENERATED_BODY()
  UPROPERTY(BlueprintReadOnly, Category="Inventory|Operation")
  FInventoryEntryHandle AffectedEntry;
- void Set(EInventoryQuantityOperationStatus status, int64 requestedQuantity, int64 changedQuantity,
-  const FInventoryItemPayload& outputPayload, const FInventoryEntryHandle& affectedEntry)
+ void Set(const FInventoryOperationResult& Result, const FInventoryEntryHandle& InAffectedEntry)
  {
-  Status = status;
-  RequestedQuantity = requestedQuantity;
-  ChangedQuantity = changedQuantity;
-  OutputPayload = outputPayload;
-  AffectedEntry = affectedEntry;
-  RemainingQuantity = RequestedQuantity - ChangedQuantity;
-  FailureReason = status == EInventoryQuantityOperationStatus::Succeeded
-   ? EInventoryFailureReason::None : EInventoryFailureReason::Rejected;
+  Status = Result.Status;
+  RequestedQuantity = Result.RequestedQuantity;
+  ChangedQuantity = Result.ChangedQuantity;
+  RemainingQuantity = Result.RemainingQuantity;
+  OutputPayload = Result.OutputPayload;
+  FailureReason = Result.FailureReason;
+  AffectedEntry = InAffectedEntry;
  }
 };
